@@ -352,7 +352,8 @@ addToFileIfMissing "$userBashProfileFile" "^(export)? *PATH=.*(\\\$MonkeyDevPath
 iosSdkPlatformPath=`getSdkProperty iphoneos PlatformPath`
 macosSdkPlatformPath=`getSdkProperty macosx PlatformPath`
 
-specificationFile=$(cd $iosSdkPlatformPath/../../.. && pwd)/PlugIns/XCBSpecifications.ideplugin/Contents/Resources/Embedded-Device.xcspec
+# specificationFile=$(cd $iosSdkPlatformPath/../../.. && pwd)/PlugIns/XCBSpecifications.ideplugin/Contents/Resources/Embedded-Device.xcspec
+specificationFile="/Applications/Xcode.app/Contents/SharedFrameworks/XCBuild.framework/Versions/A/PlugIns/XCBBuildService.bundle/Contents/PlugIns/XCBSpecifications.ideplugin/Contents/Resources/Embedded-Device.xcspec"
 
 requireFile "$specificationFile" false
 
@@ -362,10 +363,12 @@ requireBackup "$specificationFile"
 hasPackageTypeForCommandLineTool=`doesFileContain "$specificationFile" 'com.apple.package-type.mach-o-executable'`
 hasProductTypeForCommandLineTool=`doesFileContain "$specificationFile" 'com.apple.product-type.tool'`
 
-macosxSDKSpecificationsPath="$(cd $macosSdkPlatformPath/../../.. && pwd)/PlugIns/XCBSpecifications.ideplugin/Contents/Resources"
-# echo $macosxSDKSpecificationsPath
-packageTypesForMacOSXPath="$macosxSDKSpecificationsPath/MacOSX Package Types.xcspec"
-productTypesForMacOSXPath="$macosxSDKSpecificationsPath/MacOSX Product Types.xcspec"
+# macosxSDKSpecificationsPath="$(cd $macosSdkPlatformPath/../../.. && pwd)/PlugIns/XCBSpecifications.ideplugin/Contents/Resources"
+# packageTypesForMacOSXPath="$macosxSDKSpecificationsPath/MacOSX Package Types.xcspec"
+# productTypesForMacOSXPath="$macosxSDKSpecificationsPath/MacOSX Product Types.xcspec"
+macosxSDKSpecificationsPath="$macosSdkPlatformPath/Developer/Library/Xcode/PrivatePlugIns"
+packageTypesForMacOSXPath="$macosxSDKSpecificationsPath/IDEOSXSupportCore.ideplugin/Contents/Resources/MacOSX Package Types.xcspec"
+productTypesForMacOSXPath="$macosxSDKSpecificationsPath/IDEOSXSupportCore.ideplugin/Contents/Resources/MacOSX Product Types.xcspec"
 
 requireFile "$packageTypesForMacOSXPath" false
 requireFile "$productTypesForMacOSXPath" false
